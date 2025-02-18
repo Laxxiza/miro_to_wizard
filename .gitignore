@@ -1,0 +1,15 @@
+# Dependency directory
+node_modules
+data
+output
+data.*
+output.*
+*.bat
+# Optional npm cache directory
+.npm
+
+#env
+.env
+
+#vscode
+.vscode
