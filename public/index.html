@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>File Selector</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script
+            src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
+            integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
+            crossorigin="anonymous"
+            referrerpolicy="no-referrer"
+    ></script>
+    <script src="main.js"></script>
+    <style>
+        body, html {
+            background: #1D1F20;
+            color: white;
+            height: 100%;
+        }
+    </style>
+</head>
+<body>
+    <div class="position-relative">
+        <div id="instructBut" class="position-absolute top-0 start-0 m-4">
+            <button id="instuct" type="button" class="btn btn-warning position-relative" data-bs-toggle="modal" data-bs-target="#faq-modal">
+                Инструкция <span class="position-absolute top-0 start-100 translate-middle badge border border-light rounded-circle bg-danger p-2"></span>
+            </button>
+        </div>
+        <div id="updateBut" class="position-absolute top-0 start-50 translate-middle-x mt-4" style="display: none;">
+            <button id="instuct" type="button" class="btn btn-warning position-relative">
+                Доступно обновление <span class="position-absolute top-0 start-100 translate-middle badge border border-light rounded-circle bg-danger p-2"></span>
+            </button>
+        </div>
+        <div id="logsBut" class="position-absolute top-0 end-0 m-4">
+            <button id="instuct" type="button" class="btn btn-warning position-relative" data-bs-toggle="modal" data-bs-target="#logs-modal">
+                Логи <span class="position-absolute top-0 start-100 translate-middle badge border border-light rounded-circle bg-danger p-2"></span>
+            </button>
+        </div>
+    </div>
+    <!-- logs modal -->
+    <div id="logs-modal" class="modal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-fullscreen">
+            <div class="modal-content">
+                <div class="modal-header border border-warning bg-dark">
+                    <h5 class="modal-title text-warning">Логирование процесса</h5>
+                    <button type="button" class="btn-close bg-warning" data-bs-dismiss="modal" data-bs-toggle="modal" data-bs-target="#log-modal"></button>
+                </div>
+                <div id="log-container" class="border border-warning rounded p-3 bg-black text-white fs-6" style="height: 100%; overflow-y: auto; font-family: monospace;"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- devtools modal -->
+    <div id="devtool-modal" class="modal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-fullscreen">
+            <div class="modal-content">
+                <div class="modal-header border border-warning bg-dark">
+                    <button type="button" class="btn-close bg-warning" data-bs-dismiss="modal" data-bs-toggle="modal" data-bs-target="#faq-modal"></button>
+                </div>
+                <div class="modal-body border border-warning bg-dark">
+                    <img src="img/devtools.png" class="rounded img-fluid" alt="devtools">
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- devtools cookies modal -->
+    <div id="devtool-cookies-modal" class="modal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-fullscreen">
+            <div class="modal-content">
+                <div class="modal-header border border-warning bg-dark">
+                    <button type="button" class="btn-close bg-warning" data-bs-dismiss="modal" data-bs-toggle="modal" data-bs-target="#faq-modal"></button>
+                </div>
+                <div class="modal-body border border-warning bg-dark">
+                    <div class="text-center">
+                        <img src="img/devtools-cookies.png" class="rounded img" alt="devtools">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- devtools token modal -->
+    <div id="devtool-token-modal" class="modal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-fullscreen">
+            <div class="modal-content">
+                <div class="modal-header border border-warning bg-dark">
+                    <button type="button" class="btn-close bg-warning" data-bs-dismiss="modal" data-bs-toggle="modal" data-bs-target="#faq-modal"></button>
+                </div>
+                <div class="modal-body border border-warning bg-dark">
+                    <div class="text-center">
+                        <img src="img/devtools-token.png" class="rounded img" alt="devtools">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- main modal -->
+    <div id="faq-modal" class="modal modal-lg text-warning fade" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header border border-warning bg-dark">
+                    <h5 class="modal-title">Инструкция</h5>
+                    <button type="button" class="btn-close bg-warning" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body border border-warning bg-dark">
+                    <div class="d-flex align-items-start">
+                        <div class="nav flex-column nav-pills me-3" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+                          <button class="btn btn-outline-warning mb-2 active" id="v-pills-home-tab" data-bs-toggle="pill" data-bs-target="#v-pills-token" type="button" role="tab" aria-controls="v-pills-token" aria-selected="true">Токен</button>
+                          <button class="btn btn-outline-warning mb-2" id="v-pills-profile-tab" data-bs-toggle="pill" data-bs-target="#v-pills-board" type="button" role="tab" aria-controls="v-pills-board" aria-selected="false">Доска Miro</button>
+                          <button class="btn btn-outline-warning mb-2" id="v-pills-messages-tab" data-bs-toggle="pill" data-bs-target="#v-pills-frame" type="button" role="tab" aria-controls="v-pills-frame" aria-selected="false">Фрейм</button>
+                        </div>
+                        <div class="tab-content" id="v-pills-tabContent">
+                          <div class="tab-pane fade show active" id="v-pills-token" role="tabpanel" aria-labelledby="v-pills-token-tab" tabindex="0">
+                            <h3>Как получить токен?</h3>
+                            <p>1. Заходим на сайт миро: <span class="text-danger fw-medium">https://miro.com/</span></p>
+                            <p>2. Авторизуемся в своем аккаунте у которого есть <span class="text-danger fw-medium">доступ</span> к нужной доске</p>
+                            <p>3. В любом месте на сайте открываем <span class="text-danger fw-medium">Консоль разработчика(DevTools)</span>. Чтобы открыть DevTools можно нажать <span class="text-danger fw-medium">F12</span> на клавиатуре или ПКМ в любом месте и выбрать пункт <span class="text-danger fw-medium">Посмотреть код элемента</span></p>
+                            <p>4. В верхней части открывшегося окна находим вкладку <span class="text-danger fw-medium">Application</span>. Если ее нет, нажмите на кнопку <span class="text-danger fw-medium">>>.</span></p>
+                            <p>
+                                <a id="btn-devtool-modal" class="btn btn-warning position-relative" data-bs-toggle="modal" data-bs-target="#devtool-modal">
+                                    Пример <span class="position-absolute top-0 start-100 translate-middle badge border border-light rounded-circle bg-danger p-2"></span>
+                                </a>
+                            </p>
+                            <p>5. Далее в <span class="text-danger fw-medium">Левой</span> части открытого окна ищем пункт <span class="text-danger fw-medium">Cookies</span>, нажимаем на него. Пункт раскроется и появится новый пукнт <span class="text-danger fw-medium">https://miro.com/</span> - нажимаем</p>
+                            <p>
+                                <a id="btn-devtool-modal" class="btn btn-warning position-relative" data-bs-toggle="modal" data-bs-target="#devtool-cookies-modal">
+                                    Пример <span class="position-absolute top-0 start-100 translate-middle badge border border-light rounded-circle bg-danger p-2"></span>
+                                </a>
+                            </p>
+                            <p>6. Теперь смотрим в <span class="text-danger fw-medium">Правую</span> часть окна. <span class="text-danger fw-medium">Сверху</span> будет поле поиска, в него пишем - <span class="text-danger fw-medium">token</span>. И в появившихся результатх выбираем одноименный пункт - <span class="text-danger fw-medium">token</span></p>
+                            <p>
+                                <a id="btn-devtool-modal" class="btn btn-warning position-relative" data-bs-toggle="modal" data-bs-target="#devtool-token-modal">
+                                    Пример <span class="position-absolute top-0 start-100 translate-middle badge border border-light rounded-circle bg-danger p-2"></span>
+                                </a>
+                            </p>
+                            <p>7. Копируем ваш <span class="text-danger fw-medium">token</span>, возвращаемся в программу и поставляем в соответствующее поле</p>
+                        </div>
+                          <div class="tab-pane fade" id="v-pills-board" role="tabpanel" aria-labelledby="v-pills-board-tab" tabindex="0">
+                            <p>1. <span class="text-danger fw-medium">Открываем</span> доску из которой будете делать выгрузку</p>
+                            <p>2. Нажимаете в <span class="text-danger fw-medium">url-поле</span> в браузере. В строке будет такая запись <span class="text-danger fw-medium">https://miro.com/app/board/uXjWO_TEl2A=/</span>. В конце ссылки будет указан <span class="text-danger fw-medium">id вашей доски</span>. Копируем его <span class="text-danger fw-medium">без слешей</span></p>
+                            <p>3. Пример <span class="text-danger fw-medium">id</span> доски - <span class="text-danger fw-medium">uXjWO_TEl2A=</span></p>
+                          </div>
+                          <div class="tab-pane fade" id="v-pills-frame" role="tabpanel" aria-labelledby="v-pills-frame-tab" tabindex="0">
+                            <p>1. Указать <span class="text-danger fw-medium">название фрейма</span>, в котором находится ваш граф</p>
+                          </div>
+                        </div>
+                    </div>
+                </div>
+          </div>
+        </div>
+    </div>
+    <div class="position-absolute top-50 start-50 translate-middle w-75 mb-3">
+        <div class="row justify-content-center">
+            <form id="mainform" class="row p-3 w-100">
+                <div class="col-4 mb-3">
+                    <div class="input-group input-group-sm has-validation">
+                        <span class="input-group-text text-warning bg-dark border-warning" id="inputGroup-sizing-sm">Токен</span>
+                        <input type="text" id="miro_token" class="form-control bg-black border-warning text-warning" style="--bs-bg-opacity: .6;" required>
+                    </div>
+                </div>
+                <div class="col-4 mb-3">
+                    <div class="input-group input-group-sm has-validation">
+                        <span class="input-group-text text-warning bg-dark border-warning" id="inputGroup-sizing-sm">Доска</span>
+                        <input type="text" id="miro_board" class="form-control bg-black border-warning text-warning" style="--bs-bg-opacity: .6;" required>
+                    </div>
+                </div>
+                <div class="col-4 mb-3">
+                    <div class="input-group input-group-sm has-validation">
+                        <span class="input-group-text text-warning bg-dark border-warning" id="inputGroup-sizing-sm">Фрейм</span>
+                        <input type="text" id="miro_frame" class="form-control bg-black border-warning text-warning" style="--bs-bg-opacity: .6;" required>
+                    </div>
+                </div>
+                <div class="col-12">
+                    <button id="send" type="button" class="btn btn-outline-warning w-100" for="btn-check-outlined4" onclick="startProcess()">Начать</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+</body>
+</html>

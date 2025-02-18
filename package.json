@@ -1,0 +1,61 @@
+{
+    "name": "miro_to_wizard",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "start": "electron .",
+        "dist": "electron-builder",
+        "clean": "rimraf electron/output",
+        "dist-clean": "npm run clean && electron-builder"
+    },
+    "build": {
+        "appId": "com.electron.miro_to_wizard",
+        "productName": "miro_to_wizard",
+        "directories": {
+            "output": "electron/output",
+            "buildResources": "electron/buildResources"
+        },
+        "asar": true,
+        "files": [
+            "index.js",
+            "preload.js",
+            "public/**/*",
+            "miro_auto_graph/**/*",
+            "miro-export/**/*",
+            "node_modules/**",
+            "!node_modules/electron",
+            "!node_modules/electron-builder",
+            "!node_modules/.bin",
+            "!**/*.md",
+            "!test",
+            "!tests",
+            "!output.json",
+            "!data.json"
+        ],
+        "win": {
+            "target": [
+                "portable"
+            ]
+        },
+        "portable": {
+            "artifactName": "miro_wizard.exe"
+        }
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+        "commander": "^12.1.0",
+        "he": "^1.2.0",
+        "JSONStream": "^1.3.5",
+        "@commander-js/extra-typings": "^12.0.0",
+        "puppeteer": "^22.1.0"
+    },
+    "devDependencies": {
+        "colors": "^1.4.0",
+        "electron": "^34.2.0",
+        "electron-builder": "^25.1.8",
+        "rimraf": "^6.0.1"
+    }
+}
