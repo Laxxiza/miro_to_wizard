@@ -45,7 +45,7 @@ async function startProcess() {
 
     filePath = "miro-export";
     args = {
-        token: token,
+        "token": token,
         "board-id": board,
         "frame-names": frame,
         "output-file": "data.json",

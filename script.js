@@ -48,10 +48,16 @@ async function runScript(scriptPath, argsObj, logCallback) {
         childProcess.on("close", (code) => {
             if (stdoutBuffer) logCallback(stdoutBuffer);
             if (stderrBuffer) logCallback(`Ошибка: ${stderrBuffer}`);
-
-            logCallback(`Процесс завершен с кодом ${code}`);
-            console.log("Process close");
-            code === 0 ? resolve() : reject(new Error(`Скрипт завершился с ошибкой (код ${code})`));
+        
+            if (code === 0) {
+                logCallback(`Процесс завершен успешно (код ${code})`);
+                console.log("Process close");
+                resolve();
+            } else {
+                const errorMessage = stderrBuffer || `Неизвестная ошибка (код ${code})`;
+                logCallback(`Скрипт завершился с ошибкой (код ${code}): ${errorMessage}`);
+                reject(new Error(`Скрипт завершился с ошибкой (код ${code}): ${errorMessage}`));
+            }
         });
 
         return childProcess;

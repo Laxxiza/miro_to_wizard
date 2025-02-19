@@ -124,49 +124,54 @@
                 <div class="modal-body border border-warning bg-dark">
                     <div class="d-flex align-items-start">
                         <div class="nav flex-column nav-pills me-3" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-                          <button class="btn btn-outline-warning mb-2 active" id="v-pills-home-tab" data-bs-toggle="pill" data-bs-target="#v-pills-token" type="button" role="tab" aria-controls="v-pills-token" aria-selected="true">Токен</button>
-                          <button class="btn btn-outline-warning mb-2" id="v-pills-profile-tab" data-bs-toggle="pill" data-bs-target="#v-pills-board" type="button" role="tab" aria-controls="v-pills-board" aria-selected="false">Доска Miro</button>
-                          <button class="btn btn-outline-warning mb-2" id="v-pills-messages-tab" data-bs-toggle="pill" data-bs-target="#v-pills-frame" type="button" role="tab" aria-controls="v-pills-frame" aria-selected="false">Фрейм</button>
+                            <button class="btn btn-outline-warning mb-2 active" id="v-pills-warn-tab" data-bs-toggle="pill" data-bs-target="#v-pills-warn" type="button" role="tab" aria-controls="v-pills-warn" aria-selected="true">ВНИМАНИЕ!</button>
+                            <button class="btn btn-outline-warning mb-2" id="v-pills-token-tab" data-bs-toggle="pill" data-bs-target="#v-pills-token" type="button" role="tab" aria-controls="v-pills-token" aria-selected="true">Токен</button>
+                            <button class="btn btn-outline-warning mb-2" id="v-pills-profile-tab" data-bs-toggle="pill" data-bs-target="#v-pills-board" type="button" role="tab" aria-controls="v-pills-board" aria-selected="false">Доска Miro</button>
+                            <button class="btn btn-outline-warning mb-2" id="v-pills-messages-tab" data-bs-toggle="pill" data-bs-target="#v-pills-frame" type="button" role="tab" aria-controls="v-pills-frame" aria-selected="false">Фрейм</button>
                         </div>
                         <div class="tab-content" id="v-pills-tabContent">
-                          <div class="tab-pane fade show active" id="v-pills-token" role="tabpanel" aria-labelledby="v-pills-token-tab" tabindex="0">
-                            <h3>Как получить токен?</h3>
-                            <p>1. Заходим на сайт миро: <span class="text-danger fw-medium">https://miro.com/</span></p>
-                            <p>2. Авторизуемся в своем аккаунте у которого есть <span class="text-danger fw-medium">доступ</span> к нужной доске</p>
-                            <p>3. В любом месте на сайте открываем <span class="text-danger fw-medium">Консоль разработчика(DevTools)</span>. Чтобы открыть DevTools можно нажать <span class="text-danger fw-medium">F12</span> на клавиатуре или ПКМ в любом месте и выбрать пункт <span class="text-danger fw-medium">Посмотреть код элемента</span></p>
-                            <p>4. В верхней части открывшегося окна находим вкладку <span class="text-danger fw-medium">Application</span>. Если ее нет, нажмите на кнопку <span class="text-danger fw-medium">>>.</span></p>
-                            <p>
-                                <a id="btn-devtool-modal" class="btn btn-warning position-relative" data-bs-toggle="modal" data-bs-target="#devtool-modal">
-                                    Пример <span class="position-absolute top-0 start-100 translate-middle badge border border-light rounded-circle bg-danger p-2"></span>
-                                </a>
-                            </p>
-                            <p>5. Далее в <span class="text-danger fw-medium">Левой</span> части открытого окна ищем пункт <span class="text-danger fw-medium">Cookies</span>, нажимаем на него. Пункт раскроется и появится новый пукнт <span class="text-danger fw-medium">https://miro.com/</span> - нажимаем</p>
-                            <p>
-                                <a id="btn-devtool-modal" class="btn btn-warning position-relative" data-bs-toggle="modal" data-bs-target="#devtool-cookies-modal">
-                                    Пример <span class="position-absolute top-0 start-100 translate-middle badge border border-light rounded-circle bg-danger p-2"></span>
-                                </a>
-                            </p>
-                            <p>6. Теперь смотрим в <span class="text-danger fw-medium">Правую</span> часть окна. <span class="text-danger fw-medium">Сверху</span> будет поле поиска, в него пишем - <span class="text-danger fw-medium">token</span>. И в появившихся результатх выбираем одноименный пункт - <span class="text-danger fw-medium">token</span></p>
-                            <p>
-                                <a id="btn-devtool-modal" class="btn btn-warning position-relative" data-bs-toggle="modal" data-bs-target="#devtool-token-modal">
-                                    Пример <span class="position-absolute top-0 start-100 translate-middle badge border border-light rounded-circle bg-danger p-2"></span>
-                                </a>
-                            </p>
-                            <p>7. Копируем ваш <span class="text-danger fw-medium">token</span>, возвращаемся в программу и поставляем в соответствующее поле</p>
-                        </div>
-                          <div class="tab-pane fade" id="v-pills-board" role="tabpanel" aria-labelledby="v-pills-board-tab" tabindex="0">
-                            <p>1. <span class="text-danger fw-medium">Открываем</span> доску из которой будете делать выгрузку</p>
-                            <p>2. Нажимаете в <span class="text-danger fw-medium">url-поле</span> в браузере. В строке будет такая запись <span class="text-danger fw-medium">https://miro.com/app/board/uXjWO_TEl2A=/</span>. В конце ссылки будет указан <span class="text-danger fw-medium">id вашей доски</span>. Копируем его <span class="text-danger fw-medium">без слешей</span></p>
-                            <p>3. Пример <span class="text-danger fw-medium">id</span> доски - <span class="text-danger fw-medium">uXjWO_TEl2A=</span></p>
-                          </div>
-                          <div class="tab-pane fade" id="v-pills-frame" role="tabpanel" aria-labelledby="v-pills-frame-tab" tabindex="0">
-                            <p>1. Указать <span class="text-danger fw-medium">название фрейма</span>, в котором находится ваш граф</p>
-                            <p>
-                                <a id="btn-miro-modal" class="btn btn-warning position-relative" data-bs-toggle="modal" data-bs-target="#miro-frame-modal">
-                                    Пример <span class="position-absolute top-0 start-100 translate-middle badge border border-light rounded-circle bg-danger p-2"></span>
-                                </a>
-                            </p>
-                          </div>
+                            <div class="tab-pane fade show active" id="v-pills-warn" role="tabpanel" aria-labelledby="v-pills-warn-tab" tabindex="0">
+                                <p>1. Для <span class="text-danger fw-medium">корректной</span> работы <span class="text-danger fw-medium">программы</span> <span class="text-danger fw-medium">обязательно требуется</span> установленный <span class="text-danger fw-medium">Chrome</span></p>
+                            </div>
+
+                            <div class="tab-pane fade" id="v-pills-token" role="tabpanel" aria-labelledby="v-pills-token-tab" tabindex="0">
+                                <h3>Как получить токен?</h3>
+                                <p>1. Заходим на сайт миро: <span class="text-danger fw-medium">https://miro.com/</span></p>
+                                <p>2. Авторизуемся в своем аккаунте у которого есть <span class="text-danger fw-medium">доступ</span> к нужной доске</p>
+                                <p>3. В любом месте на сайте открываем <span class="text-danger fw-medium">Консоль разработчика(DevTools)</span>. Чтобы открыть DevTools можно нажать <span class="text-danger fw-medium">F12</span> на клавиатуре или ПКМ в любом месте и выбрать пункт <span class="text-danger fw-medium">Посмотреть код элемента</span></p>
+                                <p>4. В верхней части открывшегося окна находим вкладку <span class="text-danger fw-medium">Application</span>. Если ее нет, нажмите на кнопку <span class="text-danger fw-medium">>>.</span></p>
+                                <p>
+                                    <a id="btn-devtool-modal" class="btn btn-warning position-relative" data-bs-toggle="modal" data-bs-target="#devtool-modal">
+                                        Пример <span class="position-absolute top-0 start-100 translate-middle badge border border-light rounded-circle bg-danger p-2"></span>
+                                    </a>
+                                </p>
+                                <p>5. Далее в <span class="text-danger fw-medium">Левой</span> части открытого окна ищем пункт <span class="text-danger fw-medium">Cookies</span>, нажимаем на него. Пункт раскроется и появится новый пукнт <span class="text-danger fw-medium">https://miro.com/</span> - нажимаем</p>
+                                <p>
+                                    <a id="btn-devtool-modal" class="btn btn-warning position-relative" data-bs-toggle="modal" data-bs-target="#devtool-cookies-modal">
+                                        Пример <span class="position-absolute top-0 start-100 translate-middle badge border border-light rounded-circle bg-danger p-2"></span>
+                                    </a>
+                                </p>
+                                <p>6. Теперь смотрим в <span class="text-danger fw-medium">Правую</span> часть окна. <span class="text-danger fw-medium">Сверху</span> будет поле поиска, в него пишем - <span class="text-danger fw-medium">token</span>. И в появившихся результатх выбираем одноименный пункт - <span class="text-danger fw-medium">token</span></p>
+                                <p>
+                                    <a id="btn-devtool-modal" class="btn btn-warning position-relative" data-bs-toggle="modal" data-bs-target="#devtool-token-modal">
+                                        Пример <span class="position-absolute top-0 start-100 translate-middle badge border border-light rounded-circle bg-danger p-2"></span>
+                                    </a>
+                                </p>
+                                <p>7. Копируем ваш <span class="text-danger fw-medium">token</span>, возвращаемся в программу и поставляем в соответствующее поле</p>
+                            </div>
+                            <div class="tab-pane fade" id="v-pills-board" role="tabpanel" aria-labelledby="v-pills-board-tab" tabindex="0">
+                                <p>1. <span class="text-danger fw-medium">Открываем</span> доску из которой будете делать выгрузку</p>
+                                <p>2. Нажимаете в <span class="text-danger fw-medium">url-поле</span> в браузере. В строке будет такая запись <span class="text-danger fw-medium">https://miro.com/app/board/uXjWO_TEl2A=/</span>. В конце ссылки будет указан <span class="text-danger fw-medium">id вашей доски</span>. Копируем его <span class="text-danger fw-medium">без слешей</span></p>
+                                <p>3. Пример <span class="text-danger fw-medium">id</span> доски - <span class="text-danger fw-medium">uXjWO_TEl2A=</span></p>
+                            </div>
+                            <div class="tab-pane fade" id="v-pills-frame" role="tabpanel" aria-labelledby="v-pills-frame-tab" tabindex="0">
+                                <p>1. Указать <span class="text-danger fw-medium">название фрейма</span>, в котором находится ваш граф</p>
+                                <p>
+                                    <a id="btn-miro-modal" class="btn btn-warning position-relative" data-bs-toggle="modal" data-bs-target="#miro-frame-modal">
+                                        Пример <span class="position-absolute top-0 start-100 translate-middle badge border border-light rounded-circle bg-danger p-2"></span>
+                                    </a>
+                                </p>
+                            </div>
                         </div>
                     </div>
                 </div>

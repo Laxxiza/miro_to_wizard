@@ -15,7 +15,7 @@ const { token, boardId, frameNames, outputFile, exportFormat } = extra_typings_1
     .parse()
     .opts();
 (async () => {
-    const browser = await puppeteer_1.default.launch({ headless: true, timeout: 600000, protocolTimeout: 600000});
+    const browser = await puppeteer_1.default.launch({ headless: true, timeout: 600000, protocolTimeout: 600000, executablePath: 'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe' });
     const page = await browser.newPage();
     await page.setCookie({
         name: "token",
