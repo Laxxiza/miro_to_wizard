@@ -1,6 +1,6 @@
 {
     "name": "miro_to_wizard",
-    "version": "1.0.0",
+    "version": "v0.0.3",
     "description": "",
     "main": "index.js",
     "scripts": {
@@ -13,23 +13,26 @@
         "appId": "com.electron.miro_to_wizard",
         "productName": "miro_to_wizard",
         "directories": {
-            "output": "electron/output",
-            "buildResources": "electron/buildResources"
+            "output": "build/output",
+            "buildResources": "build/buildResources"
         },
-        "asar": true,
+        "asar": false,
         "files": [
             "index.js",
             "preload.js",
+            "script.js",
+            "scripts/**",
             "public/**/*",
-            "miro_auto_graph/**/*",
-            "miro-export/**/*",
-            "node_modules/**",
+            "miro_auto_graph/**",
+            "miro-export/**",
+            "node_modules/**/*",
             "!node_modules/electron",
             "!node_modules/electron-builder",
             "!node_modules/.bin",
             "!**/*.md",
             "!test",
             "!tests",
+            "!build",
             "!output.json",
             "!data.json"
         ],
@@ -39,7 +42,7 @@
             ]
         },
         "portable": {
-            "artifactName": "miro_wizard.exe"
+            "artifactName": "miro_wizard_${version}.exe"
         }
     },
     "keywords": [],

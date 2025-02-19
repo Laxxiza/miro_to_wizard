@@ -1,4 +1,4 @@
-const colors = require('colors');
+const path = require("path");
 const fs = require("fs");
 const he = require("he");
 const JSONStream = require("JSONStream");
@@ -113,7 +113,9 @@ function runProgram(customOptions = {}) {
     }
 
     function saveToFile() {
-        fs.writeFile(config.outputPath.includes(".json") ? config.outputPath : config.outputPath + ".json",
+        let outputFile = path.join(config.outputPath.includes(".json") ? config.outputPath : config.outputPath + ".json");
+
+        fs.writeFile(outputFile,
             JSON.stringify({ entrypoint: config.entryPoint, nodes: Nodes.getJson() }, null, 4),
             (err) => {
                 if (err) console.log(err);

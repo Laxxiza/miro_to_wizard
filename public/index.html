@@ -22,18 +22,18 @@
 </head>
 <body>
     <div class="position-relative">
-        <div id="instructBut" class="position-absolute top-0 start-0 m-4">
-            <button id="instuct" type="button" class="btn btn-warning position-relative" data-bs-toggle="modal" data-bs-target="#faq-modal">
+        <div id="instructPos" class="position-absolute top-0 start-0 m-4">
+            <button id="instuctBut" type="button" class="btn btn-warning position-relative" data-bs-toggle="modal" data-bs-target="#faq-modal">
                 Инструкция <span class="position-absolute top-0 start-100 translate-middle badge border border-light rounded-circle bg-danger p-2"></span>
             </button>
         </div>
-        <div id="updateBut" class="position-absolute top-0 start-50 translate-middle-x mt-4" style="display: none;">
-            <button id="instuct" type="button" class="btn btn-warning position-relative">
+        <div id="updatePos" class="position-absolute top-0 start-50 translate-middle-x mt-4" style="display: none;">
+            <button id="updateBut" type="button" class="btn btn-warning position-relative">
                 Доступно обновление <span class="position-absolute top-0 start-100 translate-middle badge border border-light rounded-circle bg-danger p-2"></span>
             </button>
         </div>
-        <div id="logsBut" class="position-absolute top-0 end-0 m-4">
-            <button id="instuct" type="button" class="btn btn-warning position-relative" data-bs-toggle="modal" data-bs-target="#logs-modal">
+        <div id="logsPos" class="position-absolute top-0 end-0 m-4">
+            <button id="logsBut" type="button" class="btn btn-warning position-relative" data-bs-toggle="modal" data-bs-target="#logs-modal">
                 Логи <span class="position-absolute top-0 start-100 translate-middle badge border border-light rounded-circle bg-danger p-2"></span>
             </button>
         </div>
@@ -56,6 +56,7 @@
         <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-fullscreen">
             <div class="modal-content">
                 <div class="modal-header border border-warning bg-dark">
+                    <h5 class="modal-title text-warning">Пример</h5>
                     <button type="button" class="btn-close bg-warning" data-bs-dismiss="modal" data-bs-toggle="modal" data-bs-target="#faq-modal"></button>
                 </div>
                 <div class="modal-body border border-warning bg-dark">
@@ -69,6 +70,7 @@
         <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-fullscreen">
             <div class="modal-content">
                 <div class="modal-header border border-warning bg-dark">
+                    <h5 class="modal-title text-warning">Пример</h5>
                     <button type="button" class="btn-close bg-warning" data-bs-dismiss="modal" data-bs-toggle="modal" data-bs-target="#faq-modal"></button>
                 </div>
                 <div class="modal-body border border-warning bg-dark">
@@ -84,11 +86,28 @@
         <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-fullscreen">
             <div class="modal-content">
                 <div class="modal-header border border-warning bg-dark">
+                    <h5 class="modal-title text-warning">Пример</h5>
                     <button type="button" class="btn-close bg-warning" data-bs-dismiss="modal" data-bs-toggle="modal" data-bs-target="#faq-modal"></button>
                 </div>
                 <div class="modal-body border border-warning bg-dark">
                     <div class="text-center">
                         <img src="img/devtools-token.png" class="rounded img" alt="devtools">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- miro-frame token modal -->
+    <div id="miro-frame-modal" class="modal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-fullscreen">
+            <div class="modal-content">
+                <div class="modal-header border border-warning bg-dark">
+                    <h5 class="modal-title text-warning">Пример</h5>
+                    <button type="button" class="btn-close bg-warning" data-bs-dismiss="modal" data-bs-toggle="modal" data-bs-target="#faq-modal"></button>
+                </div>
+                <div class="modal-body border border-warning bg-dark">
+                    <div class="text-center">
+                        <img src="img/miro-frame.png" class="rounded img" alt="devtools">
                     </div>
                 </div>
             </div>
@@ -142,6 +161,11 @@
                           </div>
                           <div class="tab-pane fade" id="v-pills-frame" role="tabpanel" aria-labelledby="v-pills-frame-tab" tabindex="0">
                             <p>1. Указать <span class="text-danger fw-medium">название фрейма</span>, в котором находится ваш граф</p>
+                            <p>
+                                <a id="btn-miro-modal" class="btn btn-warning position-relative" data-bs-toggle="modal" data-bs-target="#miro-frame-modal">
+                                    Пример <span class="position-absolute top-0 start-100 translate-middle badge border border-light rounded-circle bg-danger p-2"></span>
+                                </a>
+                            </p>
                           </div>
                         </div>
                     </div>

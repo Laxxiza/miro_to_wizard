@@ -1,25 +1,35 @@
+const { app } = require('electron');
 const { spawn } = require("child_process");
+const path = require('path');
 
 async function runScript(scriptPath, argsObj, logCallback) {
     return new Promise((resolve, reject) => {
         if (!scriptPath || typeof scriptPath !== "string") {
             console.error("Ошибка: scriptPath должен быть строкой", scriptPath);
-            return;
+            return reject(new Error("Неверный путь к скрипту"));
         }
 
         const args = Object.entries(argsObj).map(([key, value]) => `--${key}=${value}`);
-        console.log(scriptPath, args);
 
-        const process = spawn("node", [scriptPath, ...args], { encoding: "utf8"});
+        let nodePath = process.execPath;
+        
+        if (app.isPackaged) {
+            nodePath = path.join(process.resourcesPath, "app", "resources", "node", "node.exe"); 
+        }
+
+        let scriptFullPath = scriptPath;
+        if (app.isPackaged) {
+            scriptFullPath = path.join(process.resourcesPath, "app", "scripts", scriptPath);
+        } else {
+            scriptFullPath = path.join(__dirname, "scripts", scriptPath);
+        }
+
+        const childProcess = spawn("node", [scriptFullPath, ...args], { encoding: "utf8" });
 
         let stdoutBuffer = "";
         let stderrBuffer = "";
 
-        process.on('spawn', () => {
-            console.log(`Процесс с PID ${process.pid} запущен!`);
-        });
-
-        process.stdout.on("data", (data) => {
+        childProcess.stdout.on("data", (data) => {
             stdoutBuffer += data.toString();
             let lines = stdoutBuffer.split(/(?=^!--)/m);
             stdoutBuffer = lines.pop();
@@ -27,7 +37,7 @@ async function runScript(scriptPath, argsObj, logCallback) {
             lines.forEach((line) => logCallback(line));
         });
 
-        process.stderr.on("data", (data) => {
+        childProcess.stderr.on("data", (data) => {
             stderrBuffer += data.toString();
             let lines = stderrBuffer.split(/(?=^!--)/m);
             stderrBuffer = lines.pop();
@@ -35,7 +45,7 @@ async function runScript(scriptPath, argsObj, logCallback) {
             lines.forEach((line) => logCallback(`Ошибка: ${line}`));
         });
 
-        process.on("close", (code) => {
+        childProcess.on("close", (code) => {
             if (stdoutBuffer) logCallback(stdoutBuffer);
             if (stderrBuffer) logCallback(`Ошибка: ${stderrBuffer}`);
 
@@ -44,7 +54,7 @@ async function runScript(scriptPath, argsObj, logCallback) {
             code === 0 ? resolve() : reject(new Error(`Скрипт завершился с ошибкой (код ${code})`));
         });
 
-        return process;
+        return childProcess;
     });
 }
 

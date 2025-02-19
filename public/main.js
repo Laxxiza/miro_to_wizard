@@ -64,6 +64,7 @@ async function startProcess() {
 
     addLog(filePath, "Запуск конвертации из Miro в Wizard");
     await startScript(filePath, args);
+    window.electronAPI.saveOutputFile("output.json");
 }
 
 async function startScript(filePath, args) {
@@ -92,8 +93,11 @@ $(document).ready(function () {
         addLog(filePath, message);
     });
 
-    window.electronAPI.updateApp((isUpdate, text) => {
-        $("#updateBut").show();
-        //addLog(filePath, message);
+    window.electronAPI.updateApp((check) => {
+        let urlUpdate = `https://github.com/${check.REPO_OWNER}/${check.REPO_NAME}/releases/latest`;
+        $("#updatePos").show();
+        $("#updateBut").append(check.text).on( "click", function() {
+            window.electronAPI.openLinkInBrowser(urlUpdate);
+          });
     });
 });

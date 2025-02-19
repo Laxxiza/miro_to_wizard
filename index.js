@@ -1,6 +1,9 @@
-const { app, BrowserWindow, ipcMain } = require('electron');
+const { app, BrowserWindow, ipcMain, dialog } = require('electron');
+const shell = require('electron').shell;
+
 const https = require('https');
 const path = require('path');
+const fs = require('fs');
 const { runScript } = require('./script');
 
 const REPO_OWNER = 'laxxiza';
@@ -26,7 +29,7 @@ app.whenReady().then(() => {
 
     mainWindow.loadFile('public/index.html');
 
-    mainWindow.webContents.openDevTools();
+    //mainWindow.webContents.openDevTools();
 });
 
 ipcMain.handle('start-script', async (event, column, filePath, args) => {
@@ -44,59 +47,95 @@ ipcMain.handle('start-script', async (event, column, filePath, args) => {
     return 'Процесс запущен';
 });
 
-ipcMain.handle('check-updates', (event) => {
-    let check = checkForUpdates();
+ipcMain.handle('save-output-file', async (event, fileName) => {
+    dialog.showOpenDialog({
+        properties: ['openDirectory'], // Открытие только папки
+        title: 'Выберите папку для сохранения',
+    }).then(result => {
+        if (!result.canceled) {
+            const folderPath = result.filePaths[0]; // Путь выбранной папки
+            const outputFile = path.join(folderPath, fileName); // Путь файла с выбранным именем
+
+            // Копирование файла
+            fs.copyFile(fileName, outputFile, (err) => {
+                if (err) {
+                    console.error('Ошибка при копировании файла:', err);
+                    event.sender.send('log-update', fileName, `Ошибка при копировании файла: ${err}`);
+                } else {
+                    console.log(`Файл успешно скопирован в: ${outputFile}`);
+                    event.sender.send('log-update', fileName, `Файл успешно скопирован в: ${outputFile}`);
+                }
+            });
+        }
+    }).catch(err => {
+        console.error('Ошибка при выборе папки:', err);
+    });
+});
+
+ipcMain.handle('open-link-in-browser', async (event, url) => {
+    shell.openExternal(url);
+    console.log("Open browser");
+});
+
+ipcMain.handle('check-updates', async (event) => {
+    let check = await checkForUpdates();
     if(check.isUpdate) {
-        event.sender.send('update-app', check.isUpdate, check.text);
+        check["REPO_OWNER"] = REPO_OWNER;
+        check["REPO_NAME"] = REPO_NAME;
+        event.sender.send('update-app', check);
     }
 });
 
+async function checkForUpdates() {
+    const url = `https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/releases/latest`;
 
-function checkForUpdates() {
-    const url = `https://raw.githubusercontent.com/${REPO_OWNER}/${REPO_NAME}/main/package.json`;
-
-    https.get(url, (res) => {
-        let data = '';
-
-        res.on('data', (chunk) => {
-            data += chunk;
-        });
-
-        res.on('end', () => {
-            try {
-                const remotePackage = JSON.parse(data);
-                const latestVersion = remotePackage.version;
-
-                if (isNewVersionAvailable(CURRENT_VERSION, latestVersion)) {
-                    return showUpdateNotification(latestVersion);
-                }
-                return { isUpdate: false }
-            } catch (error) {
-                console.error('Ошибка при разборе JSON с GitHub:', error);
+    return new Promise((resolve, reject) => {
+        const options = {
+            headers: {
+                'User-Agent': 'Electron-App',
             }
+        };
+
+        https.get(url, options, (res) => {
+            let data = '';
+
+            res.on('data', (chunk) => {
+                data += chunk;
+            });
+
+            res.on('end', () => {
+                try {
+                    const releaseData = JSON.parse(data);
+                    const latestVersion = releaseData.tag_name;
+
+                    if (isNewVersionAvailable(CURRENT_VERSION, latestVersion)) {
+                        resolve(showUpdateNotification(latestVersion));
+                    } else {
+                        resolve({ isUpdate: false });
+                    }
+                } catch (error) {
+                    console.error('Ошибка при разборе JSON с GitHub:', error);
+                    reject(error);
+                }
+            });
+        }).on('error', (err) => {
+            console.error('Ошибка запроса к GitHub:', err);
+            reject(err);
         });
-    }).on('error', (err) => {
-        console.error('Ошибка запроса к GitHub:', err);
     });
 }
 
 function isNewVersionAvailable(current, latest) {
-    const [cMajor, cMinor, cPatch] = current.split('.').map(Number);
-    const [lMajor, lMinor, lPatch] = latest.split('.').map(Number);
+    const [cMajor, cMinor, cPatch] = current.slice(1).split('.').map(Number);
+    const [lMajor, lMinor, lPatch] = latest.slice(1).split('.').map(Number);
     
     return (
         lMajor > cMajor ||
-        (lMajor === cMajor && lMinor > cMinor) ||
-        (lMajor === cMajor && lMinor === cMinor && lPatch > cPatch)
+        lMinor > cMinor ||
+        lPatch > cPatch
     );
 }
 
 function showUpdateNotification(latestVersion) {
-    // dialog.showMessageBox({
-    //     type: 'info',
-    //     title: 'Обновление доступно',
-    //     message: `Доступна новая версия: ${latestVersion}\nТекущая версия: ${CURRENT_VERSION}\nОбновите программу!`
-    // });
-    console.log(latestVersion);
-    return { isUpdate: true, text: "Апдейт" };
+    return { isUpdate: true, text: latestVersion };
 }
